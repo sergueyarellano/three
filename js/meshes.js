@@ -3,23 +3,27 @@ module.exports = {
   addMeshToScene
 }
 
-function createBox (payload) {
-  const { THREE } = payload
-  const geometry = new THREE.BoxBufferGeometry(2, 2, 2)
-  const textureLoader = new THREE.TextureLoader()
-  const texture = textureLoader.load('textures/strawberry-vanilla-crepe-breakfast_thumbnaillarge_2019-04-01-14-35-28.jpg')
+function createBox ({ position, geometry }) {
+  return (payload) => {
+    const { THREE } = payload
+    const newGeometry = new THREE.BoxBufferGeometry(...geometry)
+    const textureLoader = new THREE.TextureLoader()
+    const texture = textureLoader.load('textures/nicolas.jpeg')
 
-  texture.encoding = THREE.sRGBEncoding
-  texture.anisotropy = 16
+    texture.encoding = THREE.sRGBEncoding
+    texture.anisotropy = 16
 
-  const material = new THREE.MeshStandardMaterial({
-    map: texture
-  })
+    const material = new THREE.MeshStandardMaterial({
+      map: texture
+    })
 
-  const mesh = new THREE.Mesh(geometry, material)
-
-  payload.mesh = payload.mesh ? payload.mesh.concat(mesh) : [mesh]
-  return payload
+    const mesh = new THREE.Mesh(newGeometry, material)
+    mesh.position.x = position[0]
+    mesh.position.y = position[1]
+    mesh.position.z = position[2]
+    payload.mesh = payload.mesh ? payload.mesh.concat(mesh) : [mesh]
+    return payload
+  }
 }
 
 function addMeshToScene (payload) {

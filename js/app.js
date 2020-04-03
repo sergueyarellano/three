@@ -15,7 +15,10 @@ const { renderer, mesh, scene, camera } = pipe(
   createScene,
   createLights,
   addLightsToScene,
-  createBox,
+  createBox({ position: [0, 0, 0], geometry: [1, 1, 0.1] }),
+  createBox({ position: [2, 0, 0], geometry: [1, 1, 1] }),
+  createBox({ position: [-2, 0, 0], geometry: [1, 1, 1] }),
+  createBox({ position: [-2, 2, 0], geometry: [1, 1, 1] }),
   addMeshToScene,
   createRenderer,
   addResponsiveness
