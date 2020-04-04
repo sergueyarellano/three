@@ -8,6 +8,9 @@ function createRenderer (payload) {
   renderer.setPixelRatio(window.devicePixelRatio)
   renderer.gammaFactor = 2.2
   renderer.gammaOutput = true
+  renderer.shadowMap.enabled = true
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap
+
   container.appendChild(renderer.domElement)
   renderer.physicallyCorrectLights = true
   payload.renderer = renderer

@@ -5,14 +5,18 @@ module.exports = {
 
 function createLights (payload) {
   const { THREE } = payload
-  payload.ambientLight = new THREE.HemisphereLight(
+  const ambientLight = new THREE.HemisphereLight(
     0xddeeff, // bright sky color
     0x202020, // dim ground color
     5 // intensity
   )
-  const mainLight = new THREE.DirectionalLight(0xffffff, 5.0)
+  payload.ambientLight = ambientLight
 
-  mainLight.position.set(10, 10, 10)
+  const mainLight = new THREE.DirectionalLight(0xffffff, 5.0)
+  mainLight.castShadow = true
+  mainLight.shadow.mapSize.width = 1024
+  mainLight.shadow.mapSize.height = 1024
+  mainLight.position.set(25, 50, 25)
 
   payload.mainLight = mainLight
   return payload
