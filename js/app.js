@@ -4,7 +4,7 @@ const createCamera = require('./camera')
 const createControls = require('./controls')
 const createScene = require('./scene')
 const { createLights, addLightsToScene } = require('./lights')
-const { createBox, addMeshToScene } = require('./meshes')
+const { createBox, addMeshToScene, createPlane } = require('./meshes')
 const createRenderer = require('./renderer')
 const { togglePlay, getDOMContainer, addResponsiveness } = require('./browser')
 
@@ -15,9 +15,10 @@ const { renderer, mesh, scene, camera } = pipe(
   createScene,
   createLights,
   addLightsToScene,
-  createBox({ position: [0, 0, 0], geometry: [1, 1, 0.1] }),
-  createBox({ position: [2, 0, 0], geometry: [1, 1, 1] }),
-  createBox({ position: [-2, 0, 0], geometry: [1, 1, 1] }),
+  createPlane,
+  createBox({ position: [0, 0.5, 0], geometry: [1, 1, 0.1] }),
+  createBox({ position: [2, 0.5, 0], geometry: [1, 1, 1] }),
+  createBox({ position: [-2, 0.5, 0], geometry: [1, 1, 1] }),
   createBox({ position: [-2, 2, 0], geometry: [1, 1, 1] }),
   addMeshToScene,
   createRenderer,

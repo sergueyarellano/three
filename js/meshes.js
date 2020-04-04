@@ -1,8 +1,18 @@
 module.exports = {
   createBox,
-  addMeshToScene
+  addMeshToScene,
+  createPlane
 }
 
+function createPlane (payload) {
+  const { THREE } = payload
+  const newGeometry = new THREE.PlaneGeometry(5, 5, 5, 5)
+  const material = new THREE.MeshBasicMaterial({ color: 0x222222, wireframe: true })
+  const mesh = new THREE.Mesh(newGeometry, material)
+  mesh.rotateX(Math.PI / 2)
+  payload.mesh = payload.mesh ? payload.mesh.concat(mesh) : [mesh]
+  return payload
+}
 function createBox ({ position, geometry }) {
   return (payload) => {
     const { THREE } = payload
