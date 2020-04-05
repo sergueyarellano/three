@@ -1,29 +1,19 @@
+const THREE = require('three')
+
 module.exports = {
-  createLights,
-  addLightsToScene
+  createAmbientLight,
+  createPointLight
 }
 
-function createLights (payload) {
-  const { THREE } = payload
-  const ambientLight = new THREE.HemisphereLight(
-    0xddeeff, // bright sky color
-    0x202020, // dim ground color
-    5 // intensity
-  )
-  payload.ambientLight = ambientLight
-
-  const mainLight = new THREE.DirectionalLight(0xffffff, 5.0)
-  mainLight.castShadow = true
-  mainLight.shadow.mapSize.width = 1024
-  mainLight.shadow.mapSize.height = 1024
-  mainLight.position.set(25, 50, 25)
-
-  payload.mainLight = mainLight
-  return payload
+function createAmbientLight () {
+  return new THREE.AmbientLight(0xffffff, 0.3)
 }
 
-function addLightsToScene (payload) {
-  const { scene, mainLight, ambientLight } = payload
-  scene.add(mainLight, ambientLight)
-  return payload
+function createPointLight () {
+  const pointLight = new THREE.PointLight(0xffffff, 1)
+  pointLight.position.set(25, 50, 25)
+  pointLight.castShadow = true
+  pointLight.shadow.mapSize.width = 1024
+  pointLight.shadow.mapSize.height = 1024
+  return pointLight
 }
