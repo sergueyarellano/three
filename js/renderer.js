@@ -25,8 +25,9 @@ function createRenderer (payload) {
 }
 
 function render (payload) {
-  const { renderer, scene, camera, mesh } = payload
+  const { renderer, scene, camera, mesh, controls } = payload
   renderer.setAnimationLoop(() => {
+    controls.update()
     update(mesh)
     renderer.render(scene, camera)
   })

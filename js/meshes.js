@@ -9,8 +9,8 @@ module.exports = {
 }
 
 function createGround () {
-  const newGeometry = new THREE.BoxGeometry(100, 0.1, 100)
-  const material = new THREE.ShadowMaterial({ color: 0xeeeeee, opacity: 0.5 })
+  const newGeometry = new THREE.BoxGeometry(1000, 0.1, 1000)
+  const material = new THREE.ShadowMaterial({ color: 0xffffff, opacity: 0.5 })
   const mesh = new THREE.Mesh(newGeometry, material)
   mesh.receiveShadow = true
   return mesh

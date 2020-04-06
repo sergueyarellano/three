@@ -10,8 +10,8 @@ function createAmbientLight () {
 }
 
 function createPointLight () {
-  const pointLight = new THREE.PointLight(0xffffff, 1)
-  pointLight.position.set(25, 50, 25)
+  const pointLight = new THREE.PointLight(0xffffff, 0.8)
+  pointLight.position.set(80, 160, 120)
   pointLight.castShadow = true
   pointLight.shadow.mapSize.width = 1024
   pointLight.shadow.mapSize.height = 1024

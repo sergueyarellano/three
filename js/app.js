@@ -9,7 +9,6 @@ const { getDOMContainer, addResponsiveness } = require('./browser')
 
 pipe(
   getDOMContainer,
-  addResponsiveness,
   createCamera,
   createControls,
   createScene,
@@ -26,5 +25,6 @@ pipe(
     createBauble({ color: '#47689b', position: [-25, 20, -12] })
   ),
   createRenderer,
-  render
+  render,
+  addResponsiveness
 )({})
