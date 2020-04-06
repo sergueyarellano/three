@@ -40,5 +40,9 @@ function update (mesh) {
       m.rotationPosition += m.rotationSpeed
       m.rotation.y = Math.sin(m.rotationPosition)
     }
+    if (m.name === 'star') {
+      m.rotationPosition += m.rotationSpeed
+      m.rotation.y = Math.sin(m.rotationPosition)
+    }
   })
 }

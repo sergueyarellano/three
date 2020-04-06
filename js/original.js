@@ -1,4 +1,3 @@
-
 const THREE = require('three')
 
 var Leaf = function () {
@@ -166,14 +165,14 @@ var Star = function () {
   var starShape = new THREE.Shape([
     new THREE.Vector2(0, 50),
     new THREE.Vector2(10, 10),
-    new THREE.Vector2(40, 10),
-    new THREE.Vector2(20, -10),
-    new THREE.Vector2(30, -50),
-    new THREE.Vector2(0, -20),
-    new THREE.Vector2(-30, -50),
-    new THREE.Vector2(-20, -10),
-    new THREE.Vector2(-40, 10),
-    new THREE.Vector2(-10, 10)
+    new THREE.Vector2(40, 10)
+    // new THREE.Vector2(20, -10),
+    // new THREE.Vector2(30, -50),
+    // new THREE.Vector2(0, -20),
+    // new THREE.Vector2(-30, -50),
+    // new THREE.Vector2(-20, -10),
+    // new THREE.Vector2(-40, 10),
+    // new THREE.Vector2(-10, 10)
   ])
 
   var geometry = new THREE.ExtrudeGeometry(starShape, {
@@ -278,30 +277,30 @@ Decoration.prototype.updatePosition = function () {
   this.rotation.y = (Math.sin(this.rotationPosition))
 }
 
-var Leaf = function () {
-  THREE.Group.apply(this, arguments)
+// var Leaf = function () {
+//   THREE.Group.apply(this, arguments)
 
-  var leaf = new THREE.Mesh(
-    new THREE.TorusGeometry(0.8, 1.6, 3, 4),
-    new THREE.MeshStandardMaterial({
-      color: 0x0b8450,
-      shading: THREE.FlatShading,
-      metalness: 0,
-      roughness: 0.8,
-      refractionRatio: 0.25
-    })
-  )
-  // leaf.geometry.vertices[4].y -=1;
-  leaf.rotateX(Math.random() * Math.PI * 2)
-  leaf.rotateZ(Math.random() * Math.PI * 2)
-  leaf.rotateY(Math.random() * Math.PI * 2)
-  leaf.receiveShadow = true
-  leaf.castShadow = true
+//   var leaf = new THREE.Mesh(
+//     new THREE.TorusGeometry(0.8, 1.6, 3, 4),
+//     new THREE.MeshStandardMaterial({
+//       color: 0x0b8450,
+//       shading: THREE.FlatShading,
+//       metalness: 0,
+//       roughness: 0.8,
+//       refractionRatio: 0.25
+//     })
+//   )
+//   // leaf.geometry.vertices[4].y -=1;
+//   leaf.rotateX(Math.random() * Math.PI * 2)
+//   leaf.rotateZ(Math.random() * Math.PI * 2)
+//   leaf.rotateY(Math.random() * Math.PI * 2)
+//   leaf.receiveShadow = true
+//   leaf.castShadow = true
 
-  this.add(leaf)
-}
-Leaf.prototype = Object.create(THREE.Group.prototype)
-Leaf.prototype.constructor = Leaf
+//   this.add(leaf)
+// }
+// Leaf.prototype = Object.create(THREE.Group.prototype)
+// Leaf.prototype.constructor = Leaf
 
 var Present = function () {
   THREE.Group.apply(this, arguments)

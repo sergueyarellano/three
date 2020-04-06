@@ -8,8 +8,8 @@ function createControls (payload) {
   const controls = new OrbitControls(camera, container)
   controls.target = new THREE.Vector3(0, 80, 0)
   controls.maxPolarAngle = Math.PI / 2
-  controls.minDistance = 100
-  controls.maxDistance = 220
+  controls.minDistance = 50
+  controls.maxDistance = 300
   payload.controls = controls
 
   return payload

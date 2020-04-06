@@ -10,10 +10,11 @@ function createCamera (payload) {
     // window.innerWidth / window.innerHeight
 
     0.1, // near clipping plane
-    1000 // far clipping plane
+    2000 // far clipping plane
   )
 
-  camera.position.set(-60, 80, 210)
+  camera.position.set(258, 226, 37)
+
   camera.lookAt(new THREE.Vector3(0, 80, 0))
   payload.camera = camera
 
