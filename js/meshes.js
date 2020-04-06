@@ -9,7 +9,10 @@ module.exports = {
   createGround,
   createBranch,
   createTrunk,
-  createTree
+  createTree,
+  createPot,
+  createPresent,
+  createSymbol
 }
 
 function createGround () {
@@ -19,21 +22,84 @@ function createGround () {
   mesh.receiveShadow = true
   return mesh
 }
+
+function createPresent ({ position }) {
+  const colors = ['#ff0051', '#a53c6c', '#f19fa0', '#72bdbf', '#47689b', '#ff0051', '#a53c6c', '#f19fa0', '#72bdbf', '#47689b', '#a53c6c']
+  const boxColor = colors[Math.floor(10 * Math.random())]
+  const ribbonColor = colors[Math.floor(10 * Math.random())]
+  const boxMaterial = new THREE.MeshStandardMaterial({
+    color: boxColor,
+    flatShading: true,
+    metalness: 0,
+    roughness: 1
+  })
+  const ribbonMaterial = new THREE.MeshStandardMaterial({
+    color: ribbonColor,
+    flatShading: true,
+    metalness: 0,
+    roughness: 1
+  })
+  const box = new THREE.Mesh(
+    addNoise(new THREE.BoxGeometry(20, 12, 15), 2, 1, 2),
+    boxMaterial
+  )
+  box.castShadow = true
+  box.receiveShadow = true
+  const ribbonX = new THREE.Mesh(
+    addNoise(new THREE.BoxGeometry(22, 14, 2), 0.5),
+    ribbonMaterial
+  )
+  const ribbonY = new THREE.Mesh(
+    addNoise(new THREE.BoxGeometry(2, 14, 17), 0.5),
+    ribbonMaterial
+  )
+  const bow1 = new THREE.Mesh(
+    addNoise(new THREE.TorusGeometry(2, 1, 4, 4), 0.5),
+    ribbonMaterial
+  )
+  bow1.castShadow = true
+  bow1.receiveShadow = true
+  bow1.position.y += 8
+  bow1.position.x -= 2
+  bow1.rotateZ(-1 * Math.PI / 1.5)
+  const bow2 = new THREE.Mesh(
+    addNoise(new THREE.TorusGeometry(2, 1, 4, 4), 0.5),
+    ribbonMaterial
+  )
+  bow2.castShadow = true
+  bow2.receiveShadow = true
+  bow2.position.y += 8
+  bow2.position.x += 2
+  bow2.rotateZ(Math.PI / 1.5)
+
+  const present = new THREE.Group()
+  present.add(box, ribbonX, ribbonY, bow1, bow2)
+  present.position.y += 6
+  present.position.x = position[0]
+  present.position.z = position[2]
+  present.rotateY(THREE.Math.degToRad(Math.random() * 180))
+  present.scale.set(1.5, 1.5, 1.5)
+  return present
+}
+
 function createTree () {
   const trunk = createTrunk(220)
-  trunk.position.y = 80
-  const branches = createBranches(200, 7)
-
+  trunk.castShadow = true
+  trunk.receiveShadow = true
+  trunk.position.y = 110
+  const branches = createBranches(200, 5)
+  const pot = createPot()
+  pot.position.y = 15
   const tree = new THREE.Group()
-  tree.add(trunk, ...branches)
-  tree.position.y = 30
+  tree.add(pot, trunk, ...branches)
+
   return tree
 }
 
 function createBranches (trunkLongitude, spaceBetween) {
   const branchesNumber = Math.floor(((trunkLongitude) / spaceBetween) * 5)
   const branches = Array.from(new Array(branchesNumber), () => createBranch())
-  let height = 0
+  let height = 30
   let rotations = 0
   return branches.map((branch, index) => {
     height = index % 5 ? height : height + spaceBetween
@@ -42,6 +108,7 @@ function createBranches (trunkLongitude, spaceBetween) {
     branch.scale.set(scale, scale, scale)
     rotations += 37
     branch.rotateY(THREE.Math.degToRad(rotations))
+    branch.rotateX(THREE.Math.degToRad(-15))
     return branch
   })
 }
@@ -50,6 +117,29 @@ function getScale (x, max) {
   return 1 - x / max
 }
 
+function createPot () {
+  const potGeometry = addNoise(new THREE.CylinderGeometry(30, 25, 20, 8, 2), 2)
+  const potMaterial = new THREE.MeshStandardMaterial({
+    color: 0xf97514,
+    flatShading: true,
+    metalness: 0,
+    roughness: 0.8,
+    refractionRatio: 0.25
+  })
+  const pot = new THREE.Mesh(potGeometry, potMaterial)
+  pot.castShadow = true
+  pot.receiveShadow = true
+  var potRim = new THREE.Mesh(
+    addNoise(new THREE.CylinderGeometry(38, 35, 10, 8, 1), 2),
+    potMaterial
+  )
+  potRim.position.y += 10
+  potRim.castShadow = true
+  potRim.receiveShadow = true
+  const group = new THREE.Group()
+  group.add(pot, potRim)
+  return group
+}
 function createTrunk (height) {
   const trunkGeometry = addNoise(new THREE.CylinderGeometry(1, 18, height, 10), 5)
   const trunkMaterial = new THREE.MeshStandardMaterial({
@@ -67,8 +157,8 @@ function createTrunk (height) {
 
   return trunk
 }
-function createBranch ({ positionY = 0, rotate = 0, tilt = 5 } = {}) {
-  const branchLength = 60
+function createBranch () {
+  const branchLength = 40
   const stickgeometry = addNoise(new THREE.CylinderGeometry(3, 4, branchLength, 3), 2)
   const stickMaterial = new THREE.MeshStandardMaterial({
     color: 0x804E49,
@@ -83,6 +173,7 @@ function createBranch ({ positionY = 0, rotate = 0, tilt = 5 } = {}) {
   stick.rotateX(THREE.Math.degToRad(90))
   stick.position.z = 50
   stick.receiveShadow = true
+  stick.castShadow = true
 
   const leaves = createLeaves(branchLength, 10)
   const leavesGroup = new THREE.Group()
@@ -93,9 +184,7 @@ function createBranch ({ positionY = 0, rotate = 0, tilt = 5 } = {}) {
   leavesGroup.rotateY(THREE.Math.degToRad(90))
   const branch = new THREE.Group()
   branch.add(stick, leavesGroup)
-  branch.rotateY(THREE.Math.degToRad(rotate))
-  branch.rotateX(THREE.Math.degToRad(-tilt))
-  branch.position.y += positionY
+
   branch.name = 'branch'
   return branch
 }
@@ -132,7 +221,7 @@ function createLeaves (branchLenght, spaceBetween) {
 function createLeaf () {
   const leafGeometry = addNoise(new THREE.CylinderGeometry(2, 1, 30, 4), 10)
   const leafMaterial = new THREE.MeshStandardMaterial({
-    color: 0x15a46b,
+    color: 0x698F3F,
     flatShading: true,
     metalness: 0,
     roughness: 1,
@@ -178,12 +267,56 @@ function createStar ({ positionY }) {
     emissiveIntensity: 0.4
   })
   const mesh = new THREE.Mesh(geometry, material)
-  mesh.scale.set(0.3, 0.3, 0.3)
+  mesh.scale.set(0.2, 0.2, 0.2)
   mesh.name = 'star'
   mesh.rotationSpeed = Math.random() * 0.02 + 0.005
   mesh.rotationPosition = Math.random()
   mesh.position.y = positionY
+
   return mesh
+}
+function createSymbol () {
+  const symbol = new THREE.Shape([
+    new THREE.Vector2(-50, 0),
+    new THREE.Vector2(-40, 0),
+    new THREE.Vector2(-40, -40),
+    new THREE.Vector2(0, -40),
+    new THREE.Vector2(0, -50),
+    new THREE.Vector2(-50, -50)
+  ])
+  const geometry = new THREE.ExtrudeGeometry(symbol, {
+    steps: 1,
+    depth: 2,
+    curveSegments: 1,
+    bevelEnabled: true,
+    bevelThickness: 10,
+    bevelSize: 10,
+    bevelSegments: 1
+  })
+  const material = new THREE.MeshStandardMaterial({
+    color: 0xffd423,
+    flatShading: true,
+    metalness: 0,
+    roughness: 0.8,
+    refractionRatio: 0.25,
+    emissive: 0xffd423,
+    emissiveIntensity: 0.4
+  })
+  const mesh = new THREE.Mesh(geometry, material)
+  const mesh2 = new THREE.Mesh(geometry, material)
+  mesh2.position.y += 20
+  mesh2.position.x += 20
+  mesh2.rotateZ(THREE.Math.degToRad(180))
+  const group = new THREE.Group()
+  group.add(mesh, mesh2)
+  group.scale.set(0.1, 0.1, 0.1)
+  group.name = 'star'
+  group.position.y = 230
+  group.position.x = 0
+  group.rotationSpeed = Math.random() * 0.02 + 0.005
+  group.rotationPosition = Math.random()
+
+  return group
 }
 
 function createBauble ({ color, position }) {
@@ -241,7 +374,7 @@ function createBauble ({ color, position }) {
   group.position.x += position[0]
   group.position.y += position[1]
   group.position.z += position[2]
-  group.scale.set(0.5, 0.5, 0.5)
+  group.scale.set(0.3, 0.3, 0.3)
 
   return group
 }

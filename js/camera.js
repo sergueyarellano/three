@@ -13,7 +13,7 @@ function createCamera (payload) {
     2000 // far clipping plane
   )
 
-  camera.position.set(258, 226, 37)
+  camera.position.set(279, 138, 86)
 
   camera.lookAt(new THREE.Vector3(0, 80, 0))
   payload.camera = camera

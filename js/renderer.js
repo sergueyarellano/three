@@ -28,6 +28,8 @@ function render (payload) {
   const { renderer, scene, camera, mesh, controls } = payload
   renderer.setAnimationLoop(() => {
     controls.update()
+    // console.log('controls: ', controls)
+    // controls.position0 += 1
     update(mesh)
     renderer.render(scene, camera)
   })

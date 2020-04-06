@@ -10,6 +10,8 @@ function createControls (payload) {
   controls.maxPolarAngle = Math.PI / 2
   controls.minDistance = 50
   controls.maxDistance = 300
+  controls.autoRotate = true
+  controls.autoRotateSpeed = 0.4
   payload.controls = controls
 
   return payload

@@ -16,7 +16,7 @@ function addToScene (type, ...newInstances3D) {
   return (payload) => {
     const { scene } = payload
     scene.add(...newInstances3D)
-    scene.add(new THREE.AxesHelper(100))
+    // scene.add(new THREE.AxesHelper(100))
 
     const instances3D = payload[type] || []
     payload[type] = instances3D.concat(newInstances3D)
