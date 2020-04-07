@@ -5,16 +5,19 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "budo app.js --open --live"
+    "start": "budo app.js --force-default-index --css styles/main.css  --open --live ",
+    "build": "browserify -p tinyify app.js > bundle.js"
   },
-  "author": "",
+  "author": "sergueyarellano",
   "license": "ISC",
   "dependencies": {
     "three": "^0.108.0",
     "three-orbitcontrols": "^2.108.1"
   },
   "devDependencies": {
+    "browserify": "^16.5.1",
     "budo": "^11.6.3",
-    "standard": "^14.3.1"
+    "standard": "^14.3.1",
+    "tinyify": "^2.5.2"
   }
 }

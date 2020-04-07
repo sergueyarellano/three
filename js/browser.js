@@ -10,7 +10,10 @@ function addResponsiveness (payload) {
 }
 
 function getDOMContainer (payload) {
-  payload.container = document.querySelector('#scene-container')
+  const container = document.createElement('div')
+  container.id = 'scene-container'
+  document.body.appendChild(container)
+  payload.container = container
   return payload
 }
 
